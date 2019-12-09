@@ -50,6 +50,14 @@ class Renderer: NSObject, MTKViewDelegate {
     return VertexUniforms(viewportSize: SIMD2<UInt32>(UInt32(view.drawableSize.width), UInt32(view.drawableSize.height)))
   }()
   
+  lazy var linkMesh: LinkMesh = {
+    return LinkMesh.build(detailLevel: 7)
+  }()
+  
+  lazy var linkVertexBuffer: MTLBuffer = {
+    return linkMesh.toVertexBuffer(forDevice: device)
+  }()
+  
   init(view: MTKView) {
     self.view = view
     super.init()
@@ -81,21 +89,15 @@ class Renderer: NSObject, MTKViewDelegate {
       
       renderEncoder.setRenderPipelineState(renderPipelineState)
       
-      let vertices = [(250, -250), (-250, -250), (0, 250)].map { x, y in VertexInput(position: SIMD2<Float>(x, y)) }
-      
-      renderEncoder.setVertexBytes(
-        vertices,
-        length: vertices.count * MemoryLayout<SIMD2<Float>>.size,
-        index: 0
-      )
-            
+      renderEncoder.setVertexBuffer(linkVertexBuffer, offset: 0, index: 0)
+                  
       renderEncoder.setVertexBytes(
         &vertexUniforms,
         length: MemoryLayout<VertexUniforms>.size,
         index: 1
       )
       
-      renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: 3)
+      renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: linkMesh.triangleVerticesCount)
       renderEncoder.endEncoding()
       
       commandBuffer.present(currentDrawable)
