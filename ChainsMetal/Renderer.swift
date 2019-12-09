@@ -50,8 +50,8 @@ class Renderer: NSObject, MTKViewDelegate {
     return VertexUniforms(viewportSize: SIMD2<UInt32>(UInt32(view.drawableSize.width), UInt32(view.drawableSize.height)))
   }()
   
-  lazy var linkMesh: LinkMesh = {
-    return LinkMesh.build(detailLevel: 7)
+  lazy var linkMesh: TriangleVertexEncodable = {
+    return AnnulusMesh.build(detailLevel: 7)
   }()
   
   lazy var linkVertexBuffer: MTLBuffer = {
