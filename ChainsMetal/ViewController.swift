@@ -1,20 +1,33 @@
-//
-//  ViewController.swift
-//  ChainsMetal
-//
-//  Created by Kevin Finn on 12/7/19.
-//  Copyright © 2019 heptarex. All rights reserved.
-//
-
 import UIKit
+import MetalKit
 
 class ViewController: UIViewController {
-
+  var metalView: MetalView!
+  var metalViewConstraints: [NSLayoutConstraint]? {
+    didSet {
+      if let constraints = oldValue {
+        view.removeConstraints(constraints)
+      }
+      if let constraints = metalViewConstraints {
+        view.addConstraints(constraints)
+      }
+    }
+  }
+  
   override func viewDidLoad() {
     super.viewDidLoad()
-    // Do any additional setup after loading the view.
+    
+    view.backgroundColor = UIColor.white
+    
+    metalView = MetalView()
+    metalView.translatesAutoresizingMaskIntoConstraints = false
+    view.addSubview(metalView)
+    
+    self.updateViewConstraints()
   }
-
-
+  
+  override func updateViewConstraints() {
+    super.updateViewConstraints()
+    metalViewConstraints = metalView.constraintsToFillSuperview()
+  }
 }
-
