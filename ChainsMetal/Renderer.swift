@@ -6,7 +6,15 @@ struct VertexUniforms {
 }
 
 struct VertexInput {
-  var position: SIMD2<Float>
+  var position: SIMD3<Float>
+  
+  static func from(x: Float, y: Float) -> Self {
+    return from(x: x, y: y, z: 0)
+  }
+  
+  static func from(x: Float, y: Float, z: Float) -> Self {
+    return Self(position: SIMD3<Float>(x, y, z))
+  }
 }
 
 class Renderer: NSObject, MTKViewDelegate {

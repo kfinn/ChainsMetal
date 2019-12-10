@@ -6,7 +6,7 @@ typedef struct {
 } VertexUniforms;
 
 typedef struct {
-  float2 position;
+  float3 position;
 }  VertexInput;
 
 typedef struct {
@@ -20,11 +20,12 @@ vertex VertexOutput vertexShader(
                                  ) {
   VertexOutput out;
   
-  float2 pixelSpacePosition = vertices[vertexID].position.xy;
+  float3 pixelSpacePosition = vertices[vertexID].position;
   float2 viewportSize = float2(uniforms.viewportSize);
   
   out.position = float4(0, 0, 0.5, 1);
-  out.position.xy = pixelSpacePosition / (viewportSize / 2.0);
+  out.position.xy = pixelSpacePosition.xy / (viewportSize / 2.0);
+  out.position.z = pixelSpacePosition.z;
   return out;
 }
 

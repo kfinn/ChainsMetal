@@ -13,11 +13,11 @@ extension TriangleVertexEncodable {
   }
   
   func toVertexBuffer(forDevice device: MTLDevice) -> MTLBuffer {
-    let triangleVertexInputs = triangleVertices.map { x, y in VertexInput(position: SIMD2<Float>(x, y)) }
+    let triangleVertexInputs = triangleVertices.map { x, y in VertexInput.from(x: x, y: y) }
     
     return device.makeBuffer(
       bytes: triangleVertexInputs,
-      length: triangleVertices.count * MemoryLayout<SIMD2<Float>>.size,
+      length: triangleVertices.count * MemoryLayout<VertexInput>.size,
       options: MTLResourceOptions.cpuCacheModeWriteCombined
     )!
   }
