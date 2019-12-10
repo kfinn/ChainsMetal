@@ -7,13 +7,13 @@ struct VertexUniforms {
 
 struct VertexInput {
   var position: SIMD3<Float>
+  var normal: SIMD3<Float>
   
-  static func from(x: Float, y: Float) -> Self {
-    return from(x: x, y: y, z: 0)
-  }
-  
-  static func from(x: Float, y: Float, z: Float) -> Self {
-    return Self(position: SIMD3<Float>(x, y, z))
+  static func from(position: (Float, Float, Float), normal: (Float, Float, Float)) -> Self {
+    return Self(
+      position: SIMD3<Float>(position.0, position.1, position.2),
+      normal: SIMD3<Float>(normal.0, normal.1, normal.2)
+    )
   }
 }
 
@@ -58,12 +58,12 @@ class Renderer: NSObject, MTKViewDelegate {
     return VertexUniforms(viewportSize: SIMD2<UInt32>(UInt32(view.drawableSize.width), UInt32(view.drawableSize.height)))
   }()
   
-  lazy var linkMesh: TriangleVertexEncodable = {
-    return AnnulusMesh.build(detailLevel: 7)
+  lazy var mesh: TriangleVertexEncodable = {
+    return TorusMesh.build(detailLevel: 7)
   }()
   
-  lazy var linkVertexBuffer: MTLBuffer = {
-    return linkMesh.toVertexBuffer(forDevice: device)
+  lazy var meshVertexBuffer: MTLBuffer = {
+    return mesh.toVertexBuffer(forDevice: device)
   }()
   
   init(view: MTKView) {
@@ -90,14 +90,14 @@ class Renderer: NSObject, MTKViewDelegate {
           originY: 0,
           width: Double(vertexUniforms.viewportSize.x),
           height: Double(vertexUniforms.viewportSize.y),
-          znear: -1,
-          zfar: 1
+          znear: -1000,
+          zfar: 1000
         )
       )
       
       renderEncoder.setRenderPipelineState(renderPipelineState)
       
-      renderEncoder.setVertexBuffer(linkVertexBuffer, offset: 0, index: 0)
+      renderEncoder.setVertexBuffer(meshVertexBuffer, offset: 0, index: 0)
                   
       renderEncoder.setVertexBytes(
         &vertexUniforms,
@@ -105,7 +105,7 @@ class Renderer: NSObject, MTKViewDelegate {
         index: 1
       )
       
-      renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: linkMesh.triangleVerticesCount)
+      renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: mesh.triangleVerticesCount)
       renderEncoder.endEncoding()
       
       commandBuffer.present(currentDrawable)

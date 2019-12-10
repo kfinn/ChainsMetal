@@ -16,9 +16,8 @@
 		0A77C500239D52AC004A02A4 /* Renderer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A77C4FF239D52AC004A02A4 /* Renderer.swift */; };
 		0A77C502239D553B004A02A4 /* Chains.metal in Sources */ = {isa = PBXBuildFile; fileRef = 0A77C501239D553B004A02A4 /* Chains.metal */; };
 		0A77C504239DFAC2004A02A4 /* .gitignore in Resources */ = {isa = PBXBuildFile; fileRef = 0A77C503239DFAC2004A02A4 /* .gitignore */; };
-		0A77C506239DFD7C004A02A4 /* CircleMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A77C505239DFD7C004A02A4 /* CircleMesh.swift */; };
-		0A77C508239E9C40004A02A4 /* AnnulusMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A77C507239E9C40004A02A4 /* AnnulusMesh.swift */; };
 		0A77C50A239EA084004A02A4 /* TriangleVertexEncodable.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A77C509239EA084004A02A4 /* TriangleVertexEncodable.swift */; };
+		0AD5E7A223A02B7C0099D248 /* TorusMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0AD5E7A123A02B7C0099D248 /* TorusMesh.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,9 +32,8 @@
 		0A77C4FF239D52AC004A02A4 /* Renderer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Renderer.swift; sourceTree = "<group>"; };
 		0A77C501239D553B004A02A4 /* Chains.metal */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.metal; path = Chains.metal; sourceTree = "<group>"; };
 		0A77C503239DFAC2004A02A4 /* .gitignore */ = {isa = PBXFileReference; lastKnownFileType = text; path = .gitignore; sourceTree = "<group>"; };
-		0A77C505239DFD7C004A02A4 /* CircleMesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CircleMesh.swift; sourceTree = "<group>"; };
-		0A77C507239E9C40004A02A4 /* AnnulusMesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AnnulusMesh.swift; sourceTree = "<group>"; };
 		0A77C509239EA084004A02A4 /* TriangleVertexEncodable.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TriangleVertexEncodable.swift; sourceTree = "<group>"; };
+		0AD5E7A123A02B7C0099D248 /* TorusMesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TorusMesh.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -75,9 +73,8 @@
 				0A77C4FC239CB780004A02A4 /* UIView+KevinLayout.swift */,
 				0A77C4FF239D52AC004A02A4 /* Renderer.swift */,
 				0A77C501239D553B004A02A4 /* Chains.metal */,
-				0A77C505239DFD7C004A02A4 /* CircleMesh.swift */,
 				0A77C509239EA084004A02A4 /* TriangleVertexEncodable.swift */,
-				0A77C507239E9C40004A02A4 /* AnnulusMesh.swift */,
+				0AD5E7A123A02B7C0099D248 /* TorusMesh.swift */,
 				0A77C4EF239CB27C004A02A4 /* Assets.xcassets */,
 				0A77C4F1239CB27C004A02A4 /* LaunchScreen.storyboard */,
 				0A77C4F4239CB27C004A02A4 /* Info.plist */,
@@ -157,14 +154,13 @@
 			buildActionMask = 2147483647;
 			files = (
 				0A77C4FB239CB728004A02A4 /* MetalView.swift in Sources */,
-				0A77C508239E9C40004A02A4 /* AnnulusMesh.swift in Sources */,
 				0A77C4EB239CB27B004A02A4 /* ViewController.swift in Sources */,
 				0A77C4FD239CB780004A02A4 /* UIView+KevinLayout.swift in Sources */,
 				0A77C502239D553B004A02A4 /* Chains.metal in Sources */,
 				0A77C500239D52AC004A02A4 /* Renderer.swift in Sources */,
+				0AD5E7A223A02B7C0099D248 /* TorusMesh.swift in Sources */,
 				0A77C4E7239CB27B004A02A4 /* AppDelegate.swift in Sources */,
 				0A77C50A239EA084004A02A4 /* TriangleVertexEncodable.swift in Sources */,
-				0A77C506239DFD7C004A02A4 /* CircleMesh.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

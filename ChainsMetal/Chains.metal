@@ -7,10 +7,12 @@ typedef struct {
 
 typedef struct {
   float3 position;
+  float3 normal;
 }  VertexInput;
 
 typedef struct {
   float4 position [[position]];
+  float3 normal;
 } VertexOutput;
 
 vertex VertexOutput vertexShader(
@@ -25,11 +27,14 @@ vertex VertexOutput vertexShader(
   
   out.position = float4(0, 0, 0.5, 1);
   out.position.xy = pixelSpacePosition.xy / (viewportSize / 2.0);
-  out.position.z = pixelSpacePosition.z;
+  out.position.z = pixelSpacePosition.z / 1000.0;
+  
+  out.normal = vertices[vertexID].normal;
   return out;
 }
 
 fragment float4 fragmentShader(VertexOutput in [[stage_in]]) {
-  float4 out = float4(1, 1, 1, 1);
-  return out;
+  float3 camera = float3(0, 0, 1);
+  float ndotl = dot(camera, in.normal);
+  return float4(ndotl, ndotl, ndotl, 1);
 }

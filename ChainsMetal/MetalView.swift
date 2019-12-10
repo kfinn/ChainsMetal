@@ -8,7 +8,6 @@ class MetalView: UIView {
     let mtlView = MTKView()
     mtlView.translatesAutoresizingMaskIntoConstraints = false
     mtlView.device = mtlDevice
-    mtlView.enableSetNeedsDisplay = true
 
     return mtlView
   }()
