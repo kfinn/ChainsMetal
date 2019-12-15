@@ -3,6 +3,10 @@ import simd
 
 struct VertexUniforms {
   var viewportSize: SIMD2<UInt32>
+  var lightDirection: SIMD3<Float>
+  var albedo: SIMD3<Float>
+  var diffuseLightColor: SIMD3<Float>
+  var specularLightColor: SIMD3<Float>
 }
 
 struct VertexInput {
@@ -55,11 +59,20 @@ class Renderer: NSObject, MTKViewDelegate {
   }()
   
   lazy var vertexUniforms: VertexUniforms = {
-    return VertexUniforms(viewportSize: SIMD2<UInt32>(UInt32(view.drawableSize.width), UInt32(view.drawableSize.height)))
+    return VertexUniforms(
+      viewportSize: SIMD2<UInt32>(
+        UInt32(view.drawableSize.width),
+        UInt32(view.drawableSize.height)
+      ),
+      lightDirection: SIMD3<Float>(0, 1, 0),
+      albedo: SIMD3<Float>(0.5, 0.5, 0.5),
+      diffuseLightColor: SIMD3<Float>(1, 0, 0),
+      specularLightColor: SIMD3<Float>(1, 1, 1)
+    )
   }()
   
   lazy var mesh: TriangleVertexEncodable = {
-    return TorusMesh.build(detailLevel: 7)
+    return TorusMesh.build(detailLevel: 17)
   }()
   
   lazy var meshVertexBuffer: MTLBuffer = {
@@ -72,7 +85,13 @@ class Renderer: NSObject, MTKViewDelegate {
   }
   
   func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
-    vertexUniforms = VertexUniforms(viewportSize: SIMD2<UInt32>(UInt32(size.width), UInt32(size.height)))
+    vertexUniforms = VertexUniforms(
+      viewportSize: SIMD2<UInt32>(UInt32(size.width), UInt32(size.height)),
+      lightDirection: SIMD3<Float>(0, 1, 0),
+      albedo: SIMD3<Float>(0.5, 0.5, 0.5),
+      diffuseLightColor: SIMD3<Float>(1, 0, 0),
+      specularLightColor: SIMD3<Float>(1, 1, 1)
+    )
   }
   
   func draw(in view: MTKView) {
@@ -103,6 +122,12 @@ class Renderer: NSObject, MTKViewDelegate {
         &vertexUniforms,
         length: MemoryLayout<VertexUniforms>.size,
         index: 1
+      )
+      
+      renderEncoder.setFragmentBytes(
+        &vertexUniforms,
+        length: MemoryLayout<VertexUniforms>.size,
+        index: 0
       )
       
       renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: mesh.triangleVerticesCount)
