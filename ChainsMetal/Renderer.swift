@@ -64,7 +64,7 @@ class Renderer: NSObject, MTKViewDelegate {
         UInt32(view.drawableSize.width),
         UInt32(view.drawableSize.height)
       ),
-      lightDirection: SIMD3<Float>(0, 1, 0),
+      lightDirection: SIMD3<Float>(0.1, 1, 0),
       albedo: SIMD3<Float>(0.5, 0.5, 0.5),
       diffuseLightColor: SIMD3<Float>(1, 0, 0),
       specularLightColor: SIMD3<Float>(1, 1, 1)
@@ -72,7 +72,7 @@ class Renderer: NSObject, MTKViewDelegate {
   }()
   
   lazy var mesh: TriangleVertexEncodable = {
-    return TorusMesh.build(detailLevel: 17)
+    return ChainLinkMesh.build(detailLevel: 17)
   }()
   
   lazy var meshVertexBuffer: MTLBuffer = {
@@ -87,7 +87,7 @@ class Renderer: NSObject, MTKViewDelegate {
   func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
     vertexUniforms = VertexUniforms(
       viewportSize: SIMD2<UInt32>(UInt32(size.width), UInt32(size.height)),
-      lightDirection: SIMD3<Float>(0, 1, 0),
+      lightDirection: SIMD3<Float>(0.1, 1, 0),
       albedo: SIMD3<Float>(0.5, 0.5, 0.5),
       diffuseLightColor: SIMD3<Float>(1, 0, 0),
       specularLightColor: SIMD3<Float>(1, 1, 1)

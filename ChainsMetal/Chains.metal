@@ -50,7 +50,7 @@ fragment float4 fragmentShader(
   
   float3 diffuse = in.nDotL * uniforms.diffuseLightColor;
 
-  float3 cameraDirection = float3(0, 0, -1);
+  float3 cameraDirection = float3(0, 0, 1);
   float3 cameraReflection = cameraDirection - 2 * dot(cameraDirection, in.normal) * in.normal;
   float3 negativeCameraReflection = -1 * cameraReflection;
   float cameraReflectionDotLightDirection = dot(negativeCameraReflection, uniforms.lightDirection);

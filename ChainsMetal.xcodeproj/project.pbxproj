@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		0A35F92023A6F68700308FFD /* ChainLinkMesh.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A35F91F23A6F68700308FFD /* ChainLinkMesh.swift */; };
 		0A77C4E7239CB27B004A02A4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A77C4E6239CB27B004A02A4 /* AppDelegate.swift */; };
 		0A77C4EB239CB27B004A02A4 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 0A77C4EA239CB27B004A02A4 /* ViewController.swift */; };
 		0A77C4F0239CB27C004A02A4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 0A77C4EF239CB27C004A02A4 /* Assets.xcassets */; };
@@ -21,6 +22,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		0A35F91F23A6F68700308FFD /* ChainLinkMesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChainLinkMesh.swift; sourceTree = "<group>"; };
 		0A77C4E3239CB27B004A02A4 /* ChainsMetal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChainsMetal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A77C4E6239CB27B004A02A4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0A77C4EA239CB27B004A02A4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -75,6 +77,7 @@
 				0A77C501239D553B004A02A4 /* Chains.metal */,
 				0A77C509239EA084004A02A4 /* TriangleVertexEncodable.swift */,
 				0AD5E7A123A02B7C0099D248 /* TorusMesh.swift */,
+				0A35F91F23A6F68700308FFD /* ChainLinkMesh.swift */,
 				0A77C4EF239CB27C004A02A4 /* Assets.xcassets */,
 				0A77C4F1239CB27C004A02A4 /* LaunchScreen.storyboard */,
 				0A77C4F4239CB27C004A02A4 /* Info.plist */,
@@ -160,6 +163,7 @@
 				0A77C500239D52AC004A02A4 /* Renderer.swift in Sources */,
 				0AD5E7A223A02B7C0099D248 /* TorusMesh.swift in Sources */,
 				0A77C4E7239CB27B004A02A4 /* AppDelegate.swift in Sources */,
+				0A35F92023A6F68700308FFD /* ChainLinkMesh.swift in Sources */,
 				0A77C50A239EA084004A02A4 /* TriangleVertexEncodable.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

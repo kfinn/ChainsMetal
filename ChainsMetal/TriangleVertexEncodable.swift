@@ -49,12 +49,27 @@ func -(lhs: Point, rhs: Point) -> Vector {
   )
 }
 
+func +(lhs: Point, rhs: Vector) -> Point {
+  return Point(
+    x: lhs.x + rhs.x,
+    y: lhs.y + rhs.y,
+    z: lhs.z + rhs.z
+  )
+}
+
 struct Vertex {
   let position: Point
   let normal: Vector
   
   func toVertexInput() -> VertexInput {
     return VertexInput.from(position: position.toTuple(), normal: normal.toTuple())
+  }
+  
+  func rotatedAboutOrigin() -> Vertex {
+    return Vertex(
+      position: Point(x: -position.x, y: -position.y, z: position.z),
+      normal: Vector(x: -normal.x, y: -normal.y, z: normal.z)
+    )
   }
 }
 
