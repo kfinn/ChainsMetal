@@ -49,7 +49,7 @@ fragment float4 fragmentShader(
   float3 albedo = uniforms.albedo;
   
   float3 diffuse = (in.nDotL * 0.5 + 0.5) * uniforms.diffuseLightColor;
-  float3 global = float3(0.25, 0.25, 0.25);
+  float3 global = float3(0.1, 0.1, 0.1);
 
   float3 cameraDirection = float3(0, 0, 1);
   float3 cameraReflection = cameraDirection - 2 * dot(cameraDirection, in.normal) * in.normal;
@@ -59,7 +59,7 @@ fragment float4 fragmentShader(
   float3 specular = uniforms.specularLightColor * (cameraReflectionDotLightDirection * 0.5 + 0.5);
   
   float4 out;
-  out.rgb = albedo * (global + diffuse) + specular;
+  out.rgb = albedo * global + diffuse + specular;
   out.a = 1;
   return out;
 }

@@ -67,7 +67,7 @@ class Renderer: NSObject, MTKViewDelegate {
       lightDirection: SIMD3<Float>(0.1, 1, 0),
       albedo: SIMD3<Float>(1, 1, 1),
       diffuseLightColor: SIMD3<Float>(1, 0, 0),
-      specularLightColor: SIMD3<Float>(1, 1, 1)
+      specularLightColor: SIMD3<Float>(1, 0, 0)
     )
   }()
   
@@ -86,7 +86,7 @@ class Renderer: NSObject, MTKViewDelegate {
       lightDirection: SIMD3<Float>(0.1, 1, 0),
       albedo: SIMD3<Float>(1, 1, 1),
       diffuseLightColor: SIMD3<Float>(1, 0, 0),
-      specularLightColor: SIMD3<Float>(1, 1, 1)
+      specularLightColor: SIMD3<Float>(1, 0, 0)
     )
   }
   
