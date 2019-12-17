@@ -22,8 +22,8 @@ typedef struct {
 
 vertex VertexOutput vertexShader(
                                  uint vertexID [[vertex_id]],
-                                 constant VertexInput *vertices [[buffer(0)]],
-                                 constant VertexUniforms &uniforms [[buffer(1)]]
+                                 constant VertexUniforms &uniforms [[buffer(0)]],
+                                 constant VertexInput *vertices [[buffer(1)]]
                                  ) {
   VertexOutput out;
   
@@ -59,7 +59,7 @@ fragment float4 fragmentShader(
   float3 specular = uniforms.specularLightColor * (cameraReflectionDotLightDirection * 0.5 + 0.5);
   
   float4 out;
-  out.rgb = albedo * global + diffuse + specular;
+  out.rgb = albedo * (global + diffuse) + specular;
   out.a = 1;
   return out;
 }

@@ -31,6 +31,22 @@ struct Vector: TupleEncodable {
   func normalize() -> Vector {
     return self / length()
   }
+  
+  func rotatedAboutX(radians: Float) -> Vector {
+    return Vector(
+      x: x,
+      y: y * cos(radians) - z * sin(radians),
+      z: y * sin(radians) + z * cos(radians)
+    )
+  }
+  
+  func rotatedAboutY(radians: Float) -> Vector {
+    return Vector(
+      x: x * cos(radians) + z * sin(radians),
+      y: y,
+      z: (-x) * sin(radians) + z * cos(radians)
+    )
+  }
 }
 
 func /(lhs: Vector, rhs: Float) -> Vector {
@@ -55,6 +71,10 @@ func +(lhs: Point, rhs: Vector) -> Point {
     y: lhs.y + rhs.y,
     z: lhs.z + rhs.z
   )
+}
+
+func +(lhs: Vector, rhs: Vector) -> Vector {
+  return Vector(x: lhs.x + rhs.x, y: lhs.y + rhs.y, z: lhs.z + rhs.z)
 }
 
 struct Vertex {

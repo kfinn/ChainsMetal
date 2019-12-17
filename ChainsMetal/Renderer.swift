@@ -23,6 +23,12 @@ struct VertexInput {
 
 class Renderer: NSObject, MTKViewDelegate {
   let view: MTKView
+  
+  var lightDirection: Vector = Vector(x: -1, y: 1, z: 0).normalize() {
+    didSet {
+      view.setNeedsDisplay()
+    }
+  }
 
   var device: MTLDevice {
     return view.device!
@@ -58,18 +64,22 @@ class Renderer: NSObject, MTKViewDelegate {
     return try! device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
   }()
   
-  lazy var vertexUniforms: VertexUniforms = {
+  lazy var viewportSize: CGSize = {
+    return view.drawableSize
+  }()
+  
+  var vertexUniforms: VertexUniforms {
     return VertexUniforms(
       viewportSize: SIMD2<UInt32>(
         UInt32(view.drawableSize.width),
         UInt32(view.drawableSize.height)
       ),
-      lightDirection: SIMD3<Float>(0.1, 1, 0),
-      albedo: SIMD3<Float>(1, 1, 1),
-      diffuseLightColor: SIMD3<Float>(1, 0, 0),
-      specularLightColor: SIMD3<Float>(1, 0, 0)
+      lightDirection: SIMD3<Float>(lightDirection.x, lightDirection.y, lightDirection.z),
+      albedo: SIMD3<Float>(1, 0, 0),
+      diffuseLightColor: SIMD3<Float>(1, 1, 1),
+      specularLightColor: SIMD3<Float>(1, 1, 1)
     )
-  }()
+  }
   
   lazy var mesh: TriangleVertexEncodable = {
     return ChainLinkMesh.build(detailLevel: 7)
@@ -81,13 +91,7 @@ class Renderer: NSObject, MTKViewDelegate {
   }
   
   func mtkView(_ view: MTKView, drawableSizeWillChange size: CGSize) {
-    vertexUniforms = VertexUniforms(
-      viewportSize: SIMD2<UInt32>(UInt32(size.width), UInt32(size.height)),
-      lightDirection: SIMD3<Float>(0.1, 1, 0),
-      albedo: SIMD3<Float>(1, 1, 1),
-      diffuseLightColor: SIMD3<Float>(1, 0, 0),
-      specularLightColor: SIMD3<Float>(1, 0, 0)
-    )
+    viewportSize = size
   }
   
   func draw(in view: MTKView) {
@@ -97,6 +101,8 @@ class Renderer: NSObject, MTKViewDelegate {
       let renderEncoder = commandBuffer.makeRenderCommandEncoder(descriptor: renderPassDescriptor),
       let currentDrawable = view.currentDrawable
     {
+      var currentViewportUniforms = vertexUniforms
+
       commandBuffer.label = "Chains#draw"
       
       renderEncoder.setViewport(
@@ -112,16 +118,16 @@ class Renderer: NSObject, MTKViewDelegate {
       
       renderEncoder.setRenderPipelineState(renderPipelineState)
       
-      renderEncoder.setVertexBuffer(mesh.toTriangleVertexBuffer(forDevice: device), offset: 0, index: 0)
-
       renderEncoder.setVertexBytes(
-        &vertexUniforms,
+        &currentViewportUniforms,
         length: MemoryLayout<VertexUniforms>.size,
-        index: 1
+        index: 0
       )
       
+      renderEncoder.setVertexBuffer(mesh.toTriangleVertexBuffer(forDevice: device), offset: 0, index: 1)
+      
       renderEncoder.setFragmentBytes(
-        &vertexUniforms,
+        &currentViewportUniforms,
         length: MemoryLayout<VertexUniforms>.size,
         index: 0
       )
