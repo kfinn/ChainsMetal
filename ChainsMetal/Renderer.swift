@@ -65,18 +65,14 @@ class Renderer: NSObject, MTKViewDelegate {
         UInt32(view.drawableSize.height)
       ),
       lightDirection: SIMD3<Float>(0.1, 1, 0),
-      albedo: SIMD3<Float>(0.5, 0.5, 0.5),
+      albedo: SIMD3<Float>(1, 1, 1),
       diffuseLightColor: SIMD3<Float>(1, 0, 0),
       specularLightColor: SIMD3<Float>(1, 1, 1)
     )
   }()
   
   lazy var mesh: TriangleVertexEncodable = {
-    return ChainLinkMesh.build(detailLevel: 17)
-  }()
-  
-  lazy var meshVertexBuffer: MTLBuffer = {
-    return mesh.toVertexBuffer(forDevice: device)
+    return ChainLinkMesh.build(detailLevel: 7)
   }()
   
   init(view: MTKView) {
@@ -88,7 +84,7 @@ class Renderer: NSObject, MTKViewDelegate {
     vertexUniforms = VertexUniforms(
       viewportSize: SIMD2<UInt32>(UInt32(size.width), UInt32(size.height)),
       lightDirection: SIMD3<Float>(0.1, 1, 0),
-      albedo: SIMD3<Float>(0.5, 0.5, 0.5),
+      albedo: SIMD3<Float>(1, 1, 1),
       diffuseLightColor: SIMD3<Float>(1, 0, 0),
       specularLightColor: SIMD3<Float>(1, 1, 1)
     )
@@ -116,8 +112,8 @@ class Renderer: NSObject, MTKViewDelegate {
       
       renderEncoder.setRenderPipelineState(renderPipelineState)
       
-      renderEncoder.setVertexBuffer(meshVertexBuffer, offset: 0, index: 0)
-                  
+      renderEncoder.setVertexBuffer(mesh.toTriangleVertexBuffer(forDevice: device), offset: 0, index: 0)
+
       renderEncoder.setVertexBytes(
         &vertexUniforms,
         length: MemoryLayout<VertexUniforms>.size,

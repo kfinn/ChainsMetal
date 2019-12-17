@@ -16,7 +16,7 @@ struct ChainLinkMesh: TriangleVertexEncodable {
         z: 0
       )
 
-      return (0..<detailLevel).map({ vertexIndex -> Vertex in
+      return (0..<(detailLevel * 2)).map({ vertexIndex -> Vertex in
         let vertexAngle = Float(vertexIndex) * stride
         let vertexPosition = Point(
           x: cornerPosition.x + tubeRadius * cos(vertexAngle) * cos(cornerAngle),
@@ -62,8 +62,8 @@ struct ChainLinkMesh: TriangleVertexEncodable {
           nextRingCurrentVertex,
           currentRingNextVertex,
           
-          nextRingCurrentVertex,
           currentRingNextVertex,
+          nextRingCurrentVertex,
           nextRingNextVertex
         ]
       })

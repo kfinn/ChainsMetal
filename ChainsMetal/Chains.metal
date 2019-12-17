@@ -36,7 +36,7 @@ vertex VertexOutput vertexShader(
   
   out.normal = vertices[vertexID].normal;
   
-  out.nDotL = dot(out.normal, uniforms.lightDirection);
+  out.nDotL = dot(out.normal, normalize(uniforms.lightDirection));
   
   return out;
 }
@@ -48,17 +48,18 @@ fragment float4 fragmentShader(
   
   float3 albedo = uniforms.albedo;
   
-  float3 diffuse = in.nDotL * uniforms.diffuseLightColor;
+  float3 diffuse = (in.nDotL * 0.5 + 0.5) * uniforms.diffuseLightColor;
+  float3 global = float3(0.25, 0.25, 0.25);
 
   float3 cameraDirection = float3(0, 0, 1);
   float3 cameraReflection = cameraDirection - 2 * dot(cameraDirection, in.normal) * in.normal;
   float3 negativeCameraReflection = -1 * cameraReflection;
-  float cameraReflectionDotLightDirection = dot(negativeCameraReflection, uniforms.lightDirection);
+  float cameraReflectionDotLightDirection = dot(negativeCameraReflection, normalize(uniforms.lightDirection));
 
-  float3 specular = uniforms.specularLightColor * cameraReflectionDotLightDirection;
+  float3 specular = uniforms.specularLightColor * (cameraReflectionDotLightDirection * 0.5 + 0.5);
   
   float4 out;
-  out.rgb = albedo + diffuse + specular;
+  out.rgb = albedo * (global + diffuse) + specular;
   out.a = 1;
   return out;
 }

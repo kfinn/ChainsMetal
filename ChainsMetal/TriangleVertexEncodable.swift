@@ -82,12 +82,32 @@ extension TriangleVertexEncodable {
     return triangleVertices.count
   }
   
-  func toVertexBuffer(forDevice device: MTLDevice) -> MTLBuffer {
+  func toTriangleVertexBuffer(forDevice device: MTLDevice) -> MTLBuffer {
     let triangleVertexInputs = triangleVertices.map { $0.toVertexInput() }
     
     return device.makeBuffer(
       bytes: triangleVertexInputs,
       length: triangleVertices.count * MemoryLayout<VertexInput>.size,
+      options: MTLResourceOptions.cpuCacheModeWriteCombined
+    )!
+  }
+}
+
+extension TriangleVertexEncodable {
+  var lineVerticesCount: Int {
+    return triangleVertices.count * 2
+  }
+  
+  func toLineVertexBuffer(forDevice device: MTLDevice) -> MTLBuffer {
+    let lineVertices = (0..<triangleVertices.count).flatMap { index -> [Vertex] in
+      return [triangleVertices[index], triangleVertices[(index + 1) % triangleVertices.count]]
+    }
+    
+    let lineVertexInputs = lineVertices.map { $0.toVertexInput() }
+    
+    return device.makeBuffer(
+      bytes: lineVertexInputs,
+      length: lineVerticesCount * MemoryLayout<VertexInput>.size,
       options: MTLResourceOptions.cpuCacheModeWriteCombined
     )!
   }
