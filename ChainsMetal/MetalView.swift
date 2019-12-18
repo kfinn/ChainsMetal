@@ -13,6 +13,7 @@ class MetalView: UIView {
     mtlView.translatesAutoresizingMaskIntoConstraints = false
     mtlView.device = mtlDevice
     mtlView.enableSetNeedsDisplay = true
+    mtlView.depthStencilPixelFormat = .depth32Float
 
     return mtlView
   }()

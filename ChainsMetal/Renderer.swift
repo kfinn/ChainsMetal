@@ -45,12 +45,25 @@ class Renderer: NSObject, MTKViewDelegate {
     renderPipelineDescriptor.vertexFunction = vertexFunction
     renderPipelineDescriptor.fragmentFunction = fragmentFunction
     renderPipelineDescriptor.colorAttachments[0].pixelFormat = view.colorPixelFormat
+    renderPipelineDescriptor.depthAttachmentPixelFormat = .depth32Float
     
     return renderPipelineDescriptor
   }()
   
   lazy var renderPipelineState: MTLRenderPipelineState = {
     return try! device.makeRenderPipelineState(descriptor: renderPipelineDescriptor)
+  }()
+  
+  lazy var depthStencilDescriptor: MTLDepthStencilDescriptor = {
+    let depthStencilDescriptor = MTLDepthStencilDescriptor()
+    depthStencilDescriptor.depthCompareFunction = .less
+    depthStencilDescriptor.isDepthWriteEnabled = true
+    
+    return depthStencilDescriptor
+  }()
+  
+  lazy var depthStencilState: MTLDepthStencilState = {
+    return device.makeDepthStencilState(descriptor: depthStencilDescriptor)!
   }()
   
   lazy var viewportSize: CGSize = {
@@ -125,6 +138,7 @@ class Renderer: NSObject, MTKViewDelegate {
       )
       
       renderEncoder.setRenderPipelineState(renderPipelineState)
+      renderEncoder.setDepthStencilState(depthStencilState)
       
       renderEncoder.setVertexBytes(
         &currentViewportUniforms,
