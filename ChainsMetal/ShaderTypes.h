@@ -1,19 +1,5 @@
-//
-//  ShaderTypes.h
-//  ChainsMetal
-//
-//  Created by Kevin Finn on 12/17/19.
-//  Copyright © 2019 heptarex. All rights reserved.
-//
-
 #ifndef ShaderTypes_h
 #define ShaderTypes_h
-
-#ifdef __METAL_VERSION__
-#include <metal_stdlib>
-#else
-#import <Foundation/Foundation.h>
-#endif
 
 #include <simd/simd.h>
 
