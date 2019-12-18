@@ -1,18 +1,7 @@
 import MetalKit
 import simd
 
-struct VertexUniforms {
-  var viewportSize: SIMD2<UInt32>
-  var lightDirection: SIMD3<Float>
-  var albedo: SIMD3<Float>
-  var diffuseLightColor: SIMD3<Float>
-  var specularLightColor: SIMD3<Float>
-}
-
-struct VertexInput {
-  var position: SIMD3<Float>
-  var normal: SIMD3<Float>
-  
+extension VertexInput {
   static func from(position: (Float, Float, Float), normal: (Float, Float, Float)) -> Self {
     return Self(
       position: SIMD3<Float>(position.0, position.1, position.2),

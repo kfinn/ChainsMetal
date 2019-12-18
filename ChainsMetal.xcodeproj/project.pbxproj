@@ -23,6 +23,8 @@
 
 /* Begin PBXFileReference section */
 		0A35F91F23A6F68700308FFD /* ChainLinkMesh.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChainLinkMesh.swift; sourceTree = "<group>"; };
+		0A35F92123A9AA5700308FFD /* ShaderTypes.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ShaderTypes.h; sourceTree = "<group>"; };
+		0A35F92223A9AAA200308FFD /* BridgingHeader.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = BridgingHeader.h; sourceTree = "<group>"; };
 		0A77C4E3239CB27B004A02A4 /* ChainsMetal.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = ChainsMetal.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A77C4E6239CB27B004A02A4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		0A77C4EA239CB27B004A02A4 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -73,6 +75,8 @@
 				0A77C4EA239CB27B004A02A4 /* ViewController.swift */,
 				0A77C4FA239CB728004A02A4 /* MetalView.swift */,
 				0A77C4FC239CB780004A02A4 /* UIView+KevinLayout.swift */,
+				0A35F92123A9AA5700308FFD /* ShaderTypes.h */,
+				0A35F92223A9AAA200308FFD /* BridgingHeader.h */,
 				0A77C4FF239D52AC004A02A4 /* Renderer.swift */,
 				0A77C501239D553B004A02A4 /* Chains.metal */,
 				0A77C509239EA084004A02A4 /* TriangleVertexEncodable.swift */,
@@ -238,6 +242,7 @@
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OBJC_BRIDGING_HEADER = ChainsMetal/BridgingHeader.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 			};
 			name = Debug;
@@ -291,6 +296,7 @@
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
 				SWIFT_COMPILATION_MODE = wholemodule;
+				SWIFT_OBJC_BRIDGING_HEADER = ChainsMetal/BridgingHeader.h;
 				SWIFT_OPTIMIZATION_LEVEL = "-O";
 				VALIDATE_PRODUCT = YES;
 			};

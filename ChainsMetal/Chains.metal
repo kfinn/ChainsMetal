@@ -1,18 +1,6 @@
 #include <metal_stdlib>
+#include "ShaderTypes.h"
 using namespace metal;
-
-typedef struct {
-  uint2 viewportSize;
-  float3 lightDirection;
-  float3 albedo;
-  float3 diffuseLightColor;
-  float3 specularLightColor;
-} VertexUniforms;
-
-typedef struct {
-  float3 position;
-  float3 normal;
-}  VertexInput;
 
 typedef struct {
   float4 position [[position]];
