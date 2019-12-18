@@ -10,19 +10,25 @@ typedef struct {
 
 vertex VertexOutput vertexShader(
                                  uint vertexID [[vertex_id]],
-                                 constant VertexUniforms &uniforms [[buffer(0)]],
-                                 constant VertexInput *vertices [[buffer(1)]]
+                                 uint instanceID [[instance_id]],
+                                 constant VertexUniforms &uniforms [[buffer(VertexInputIndexVertexUniforms)]],
+                                 constant VertexInput *vertices [[buffer(VertexInputIndexVertexInput)]],
+                                 constant LinkInstanceInput *instances [[buffer(VertexInputIndexLinkInstanceInput)]]
                                  ) {
   VertexOutput out;
   
+  LinkInstanceInput instance = instances[instanceID];
   float3 pixelSpacePosition = vertices[vertexID].position;
   float2 viewportSize = float2(uniforms.viewportSize);
   
-  out.position = float4(0, 0, 0.5, 1);
-  out.position.xy = pixelSpacePosition.xy / (viewportSize / 2.0);
-  out.position.z = pixelSpacePosition.z / 1000.0;
+  float4 position = float4(0, 0, 0, 1);
+  position.xyz = pixelSpacePosition;
+  position = instance.modelTransform * position;
+  position.xy = position.xy / (viewportSize / 2.0);
+  position.z = position.z / 1000.0;
+  out.position = position;
   
-  out.normal = vertices[vertexID].normal;
+  out.normal = instance.normalTransform * vertices[vertexID].normal;
   
   out.nDotL = dot(out.normal, normalize(uniforms.lightDirection));
   

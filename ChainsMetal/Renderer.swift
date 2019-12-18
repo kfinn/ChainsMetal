@@ -74,6 +74,24 @@ class Renderer: NSObject, MTKViewDelegate {
     return ChainLinkMesh.build(detailLevel: 7)
   }()
   
+  lazy var instances: [LinkInstanceInput] = {
+    return (0...4).map { index -> LinkInstanceInput in
+      let translationTransform = matrix_float4x4.translation(x: 0, y: 1000 - Float(index) * 750, z: 0)
+      let rotationTransform = matrix_float4x4.rotation(
+        axis: SIMD3<Float>(0, 1, 0),
+        angle: Float(index) * Float.pi / 2
+      )
+      
+      let modelTransform = translationTransform * rotationTransform
+      let normalTransform = modelTransform.upperLeft3x3()
+      
+      return LinkInstanceInput(
+        modelTransform: modelTransform,
+        normalTransform: normalTransform
+      )
+    }
+  }()
+  
   init(view: MTKView) {
     self.view = view
     super.init()
@@ -91,6 +109,7 @@ class Renderer: NSObject, MTKViewDelegate {
       let currentDrawable = view.currentDrawable
     {
       var currentViewportUniforms = vertexUniforms
+      var currentInstances = instances
 
       commandBuffer.label = "Chains#draw"
       
@@ -110,18 +129,33 @@ class Renderer: NSObject, MTKViewDelegate {
       renderEncoder.setVertexBytes(
         &currentViewportUniforms,
         length: MemoryLayout<VertexUniforms>.size,
-        index: 0
+        index: Int(VertexInputIndexVertexUniforms.rawValue)
       )
       
-      renderEncoder.setVertexBuffer(mesh.toTriangleVertexBuffer(forDevice: device), offset: 0, index: 1)
+      renderEncoder.setVertexBuffer(
+        mesh.toTriangleVertexBuffer(forDevice: device),
+        offset: 0,
+        index: Int(VertexInputIndexVertexInput.rawValue)
+      )
+
+      renderEncoder.setVertexBytes(
+        &currentInstances,
+        length: MemoryLayout<LinkInstanceInput>.size * currentInstances.count,
+        index: Int(VertexInputIndexLinkInstanceInput.rawValue)
+      )
       
       renderEncoder.setFragmentBytes(
         &currentViewportUniforms,
         length: MemoryLayout<VertexUniforms>.size,
-        index: 0
+        index: Int(FragmentInputIndexVertexUniforms.rawValue)
       )
       
-      renderEncoder.drawPrimitives(type: .triangle, vertexStart: 0, vertexCount: mesh.triangleVerticesCount)
+      renderEncoder.drawPrimitives(
+        type: .triangle,
+        vertexStart: 0,
+        vertexCount: mesh.triangleVerticesCount,
+        instanceCount: currentInstances.count
+      )
       renderEncoder.endEncoding()
       
       commandBuffer.present(currentDrawable)
