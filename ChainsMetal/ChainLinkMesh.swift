@@ -59,12 +59,12 @@ struct ChainLinkMesh: TriangleVertexEncodable {
         
         return [
           currentRingCurrentVertex,
-          nextRingCurrentVertex,
-          currentRingNextVertex,
-          
           currentRingNextVertex,
           nextRingCurrentVertex,
-          nextRingNextVertex
+
+          currentRingNextVertex,
+          nextRingNextVertex,
+          nextRingCurrentVertex,
         ]
       })
     })

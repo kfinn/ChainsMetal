@@ -139,6 +139,7 @@ class Renderer: NSObject, MTKViewDelegate {
       
       renderEncoder.setRenderPipelineState(renderPipelineState)
       renderEncoder.setDepthStencilState(depthStencilState)
+      renderEncoder.setCullMode(.back)
       
       renderEncoder.setVertexBytes(
         &currentViewportUniforms,
